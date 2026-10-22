@@ -1,0 +1,246 @@
+.dialog {
+  width: min(420px, calc(100% - 32px));
+  max-width: none;
+  height: min(620px, calc(100dvh - 64px));
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 40px 80px -20px rgb(0 0 0 / 0.8);
+  overflow: hidden;
+}
+
+.dialog[open] {
+  display: flex;
+  animation: dialog-in 0.22s var(--ease-out);
+}
+
+.dialog::backdrop {
+  background: rgb(4 5 10 / 0.6);
+  backdrop-filter: blur(6px);
+  animation: fade-in 0.22s ease-out;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 12px 12px 20px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.close:hover {
+  background: var(--raised);
+  color: var(--text);
+}
+
+.search {
+  position: relative;
+  margin: 0 16px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  color: var(--text-subtle);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px 0 42px;
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  outline: none;
+  background: var(--panel);
+  font-size: 16px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.searchInput::placeholder {
+  color: var(--text-subtle);
+}
+
+.searchInput:focus {
+  border-color: var(--accent-ring);
+  box-shadow: 0 0 0 4px rgb(124 92 255 / 0.12);
+}
+
+.popular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 16px 2px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px 0 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+.chip:hover {
+  background: var(--raised);
+}
+
+.chip[aria-pressed='true'] {
+  border-color: var(--accent-ring);
+  background: var(--accent-soft);
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: 12px 0 0;
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--raised) transparent;
+  list-style: none;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+.option[aria-selected='true'] {
+  background: var(--raised);
+}
+
+.option[data-current] {
+  box-shadow: inset 0 0 0 1px var(--accent-ring);
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.symbol {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.price,
+.holdingUsd {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.holding {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+  line-height: 1.35;
+  text-align: right;
+}
+
+.holdingAmount {
+  font-size: 15px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.check {
+  flex-shrink: 0;
+  color: var(--accent-text);
+}
+
+.name + .check {
+  margin-left: auto;
+}
+
+.empty {
+  padding: 40px 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Bottom sheet on phones. */
+@media (max-width: 520px) {
+  .dialog {
+    width: 100%;
+    height: 85dvh;
+    margin: auto 0 0;
+    border-bottom: 0;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .dialog[open] {
+    animation: sheet-in 0.28s var(--ease-out);
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
